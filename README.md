@@ -41,6 +41,7 @@ their phone's wallet.
    ```
    
 3) Register for Opennode dev account and get the API Keys
+
    https://developers.opennode.co/docs/environments 
    
 4) Add the API key as an environment variable
