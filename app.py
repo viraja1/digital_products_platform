@@ -10,7 +10,7 @@ from flask import Flask, request, render_template, redirect
 app = Flask(__name__)
 conn = None
 BASE_URL = 'http://localhost'
-PORT = 5002
+PORT = 5000
 
 OPENNODE_BASE_URL = 'https://dev-api.opennode.co/v1/'
 OPENNODE_API_KEY = os.environ['OPENNODE_API_KEY']
