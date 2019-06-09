@@ -35,9 +35,10 @@ their phone's wallet.
    git clone https://github.com/viraja1/digital_products_platform.git 
    ```  
 
-2) Change directory
+2) Change directory and install requirements
    ```
    cd digital_products_platform
+   pip install -r requirements.txt
    ```
    
 3) Register for Opennode dev account and get the API Keys
