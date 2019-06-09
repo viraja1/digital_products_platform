@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Digital Products Platform</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <style>
+        .card-img-top {
+            max-height: 150px;
+            min-height: 150px;
+            object-fit: cover;
+        }
+        .product{
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar fixed-top navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Digital Products Platform</a>
+</nav>
+<br>
+<br>
+<br>
+
+<section class="sections">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4 product">
+                    <div class="card">
+                        <img class="card-img-top" src="{{product.image_url}}">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <p class="text-dark">{{product.name}}</p>
+                            </h5>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-left">
+                                <p class="text-info">${{product.amount}}</p>
+                            </div>
+                            <div class="float-right">
+                                <a href="" class="buy-btn btn btn-info" data-id="{{product.id}}"
+                                   data-name="{{product.name}}" data-amount="{{product.amount}}">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('.buy-btn').on('click', function (event) {
+            let product_id = $(this).attr("data-id");
+            let product_name = $(this).attr("data-name");
+            let amount = $(this).attr("data-amount");
+            $(this).html('Buy <i class="fa fa-refresh fa-spin"></i>');
+            $.ajax({
+                type: 'POST',
+                url: '/api/v1/create_order/',
+                data:  JSON.stringify({
+                    product_id: product_id,
+                    product_name: product_name,
+                    amount: amount
+                }),
+                dataType: 'json',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+            })
+            .done(function (data) {
+                window.location.href = data['redirect_url'];
+            })
+            .fail(function (jqXHR, textStatus) {
+                window.location.href = '/'
+            });
+            event.preventDefault();
+        });
+    });
+</script>
+</html>
